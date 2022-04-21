@@ -57,10 +57,10 @@ public class SourceDestinationPublisher : MonoBehaviour
         {
             //sourceDestinationMessage.joints[i] = m_JointArticulationBodies[i].GetPosition();
             try{
-                print(LinkNames[i] + ", " + JointNames[i]);
-                print(m_JointArticulationBodies[i].GetPosition());
+                // print(LinkNames[i] + ", " + JointNames[i]);
+                // print(m_JointArticulationBodies[i].GetPosition());
                 position[i] = m_JointArticulationBodies[i].GetPosition();
-                print("---------------------------------------------------");
+                // print("---------------------------------------------------");
             }catch{}
         }
         sourceDestinationMessage.position = position;
