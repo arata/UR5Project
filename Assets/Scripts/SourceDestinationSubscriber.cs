@@ -16,7 +16,7 @@ public class SourceDestinationSubscriber : MonoBehaviour
         {"shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist_1_joint", "wrist_2_joint", "wrist_3_joint"};
 
     [SerializeField]
-    string m_TopicName = "/pos_joint_traj_controller/command";
+    string m_TopicName = "/move_group/fake_controller_joint_states";
 
     [SerializeField]
     GameObject m_UR5e;
@@ -29,7 +29,6 @@ public class SourceDestinationSubscriber : MonoBehaviour
     void Start(){
         // Get ROS connection static instance
         m_Ros = ROSConnection.GetOrCreateInstance();
-        m_Ros.RegisterPublisher<JointStateMsg>(m_TopicName);
 
         m_JointArticulationBodies = new UrdfJointRevolute[k_NumRobotJoints];
 
