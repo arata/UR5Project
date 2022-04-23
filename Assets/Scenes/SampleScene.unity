@@ -1915,7 +1915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829999f9fcacb7414b98e1ed514e6a0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TopicName: /pos_joint_traj_controller/command
+  m_TopicName: /move_group/fake_controller_joint_states
   m_UR5e: {fileID: 1163521994}
 --- !u!1 &936785968
 GameObject:

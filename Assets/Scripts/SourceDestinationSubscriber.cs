@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+
 
 //using Unity.Robotics.ROSTCPConnector.ROSGeometry;
 using Unity.Robotics.ROSTCPConnector;
@@ -42,6 +44,19 @@ public class SourceDestinationSubscriber : MonoBehaviour
     }
     
     void CommandCallback(JointStateMsg jointMessage){
-        print(jointMessage);
+        // print(jointMessage);
+        var jointPosition = jointMessage.position;
+        var position_array = jointPosition.Select(r => (float)r * Mathf.Rad2Deg).ToArray();
+        
+        var joint_array = position_array.Zip(jointMessage.name, (position, name) => new {Position = position, Name = name});
+        foreach (var i in joint_array){
+            print(i.Name);
+            print(i.Position);
+            int ind = Array.IndexOf(JointNames, i.Name);
+
+            var joint1XDrive = m_JointArticulationBodies[ind].xDrive;
+            joint1XDrive.target = i.Position;
+            m_JointArticulationBodies[ind].xDrive = joint1XDrive;
+        }
     }
 }
