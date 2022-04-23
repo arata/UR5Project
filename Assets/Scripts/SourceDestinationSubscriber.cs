@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+
 
 //using Unity.Robotics.ROSTCPConnector.ROSGeometry;
 using Unity.Robotics.ROSTCPConnector;
@@ -22,7 +24,7 @@ public class SourceDestinationSubscriber : MonoBehaviour
     GameObject m_UR5e;
     
     // Robot Joints
-    UrdfJointRevolute[] m_JointArticulationBodies;
+    ArticulationBody[] m_JointArticulationBodies;
     // ROS Connector
     ROSConnection m_Ros;
 
@@ -30,18 +32,33 @@ public class SourceDestinationSubscriber : MonoBehaviour
         // Get ROS connection static instance
         m_Ros = ROSConnection.GetOrCreateInstance();
 
-        m_JointArticulationBodies = new UrdfJointRevolute[k_NumRobotJoints];
+        m_JointArticulationBodies = new ArticulationBody[k_NumRobotJoints];
 
         var linkName = string.Empty;
         for (var i = 0; i < k_NumRobotJoints; i++){
             linkName += LinkNames[i];
             print(linkName);
-            m_JointArticulationBodies[i] = m_UR5e.transform.Find(linkName).GetComponent<UrdfJointRevolute>();
+            m_JointArticulationBodies[i] = m_UR5e.transform.Find(linkName).GetComponent<ArticulationBody>();
         }
         ROSConnection.GetOrCreateInstance().Subscribe<JointStateMsg>(m_TopicName, CommandCallback);
     }
     
     void CommandCallback(JointStateMsg jointMessage){
         print(jointMessage);
+        var jointPosition = jointMessage.position;
+        var position_array = jointPosition.Select(r => (float)r * Mathf.Rad2Deg).ToArray();
+        
+        var joint_array = position_array.Zip(jointMessage.name, (position, name) => new {Position = position, Name = name});
+        foreach (var i in joint_array){
+            print(i.Name);
+            print(i.Position);
+            int ind = Array.IndexOf(JointNames, i.Name);
+
+            var joint1XDrive = m_JointArticulationBodies[ind].xDrive;
+            joint1XDrive.target = i.Position;
+            m_JointArticulationBodies[ind].xDrive = joint1XDrive;
+        }
+        print("packddddddddddddddddddddddddddd");
+        //new WaitForSeconds(0.5f);
     }
 }
