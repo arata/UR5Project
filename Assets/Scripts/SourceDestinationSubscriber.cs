@@ -44,7 +44,7 @@ public class SourceDestinationSubscriber : MonoBehaviour
     }
     
     void CommandCallback(JointStateMsg jointMessage){
-        print(jointMessage);
+        // print(jointMessage);
         var jointPosition = jointMessage.position;
         var position_array = jointPosition.Select(r => (float)r * Mathf.Rad2Deg).ToArray();
         
@@ -58,7 +58,5 @@ public class SourceDestinationSubscriber : MonoBehaviour
             joint1XDrive.target = i.Position;
             m_JointArticulationBodies[ind].xDrive = joint1XDrive;
         }
-        print("packddddddddddddddddddddddddddd");
-        //new WaitForSeconds(0.5f);
     }
 }
