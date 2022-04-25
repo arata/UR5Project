@@ -51,6 +51,11 @@ public class SourceDestinationPublisher : MonoBehaviour
     void Update()
     {
         var sourceDestinationMessage = new JointStateMsg();
+
+        DateTimeOffset now = DateTimeOffset.UtcNow;
+        sourceDestinationMessage.header.stamp.sec = (uint)now.ToUnixTimeSeconds();
+        sourceDestinationMessage.header.stamp.nanosec = (uint)now.ToUnixTimeMilliseconds()%1000;
+        
         sourceDestinationMessage.name = JointNames;
         double []position = new double[JointNames.Length];
         for (var i = 0; i < k_NumRobotJoints; i++)
@@ -61,7 +66,9 @@ public class SourceDestinationPublisher : MonoBehaviour
                 // print(m_JointArticulationBodies[i].GetPosition());
                 position[i] = m_JointArticulationBodies[i].GetPosition();
                 // print("---------------------------------------------------");
-            }catch{}
+            }catch{
+                
+            }
         }
         sourceDestinationMessage.position = position;
         // Finally send the message to server_endpoint.py running in ROS
