@@ -75,3 +75,19 @@ crashlytics-build.properties
 *~
 \#*\#
 .\#*
+*.exe
+*.dll
+.vscode
+
+Assets/XR/*
+!Assets/XR/XRGeneralSettings.asset
+!Assets/XR/XRGeneralSettings.asset.meta
+
+Assets/Resources/OculusRuntimeSettings*
+Assets/Resources/ONSPSettings*
+Assets/Resources/OVRPlatformToolSettings*
+
+Assets/Oculus*
+
+MonoBleedingEdge/
+# UR5Project_Data/
