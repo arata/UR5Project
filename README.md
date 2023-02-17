@@ -4,6 +4,6 @@ SETUP:
 $git clone https://github.com/Unity-Technologies/ROS-TCP-Endpoint  
 $apt install ros-noetic-universal-robots
 
-INSTALL:  
+RUN:  
 $roslaunch ros_tcp_endpoint endpoint.launch  
 $roslaunch ur5e_moveit_config demo.launch 
